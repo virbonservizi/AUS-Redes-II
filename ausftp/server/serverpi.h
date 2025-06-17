@@ -11,6 +11,7 @@
 #define MSG_299 "299 File %s size %ld bytes\r\n"
 #define MSG_226 "226 Transfer complete\r\n"
 #define MSG_502 "502 Command not implemented\r\n"
+#define MSG_215 "215 UNIX Type: L8\r\n"
 
 static const char *valid_commands[] = {
   "USER", "PASS", "ACCT", "CWD", "CDUP", "SMNT",
@@ -18,7 +19,7 @@ static const char *valid_commands[] = {
   "MODE", "RETR", "STOR", "STOU", "APPE", "ALLO",
   "REST", "RNFR", "RNTO", "ABOR", "DELE", "RMD",
   "MKD", "PWD", "LIST", "NLST", "SITE", "SYST",
-  "STAT", "HELP", "NOOP", NULL
+  "STAT", "HELP", "NOOP", "FEAT", NULL
 };
 
 static const int arg_commands[] = {

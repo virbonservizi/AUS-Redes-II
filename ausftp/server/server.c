@@ -98,7 +98,7 @@ int main(int argc, char *argv[]){
         while (1) {
             if (recv_cmd(slave_socket, command, buffer) != 0) {
                 close(slave_socket);
-                fprintf(stderr, "Error: no se pudo recibir el comando.\n");
+                fprintf(stderr, "Error: no se pudo recibir el comando %s.\n", command);
                 break;
             }
             if (strcmp(command, "QUIT") == 0) {
@@ -111,15 +111,22 @@ int main(int argc, char *argv[]){
                 break;
             }
             if (strcmp(command, "SYST") == 0) {
-                if (send(slave_socket, MSG_502, sizeof(MSG_502) - 1, 0) < 0) {
+                if (send(slave_socket, MSG_215, sizeof(MSG_215) - 1, 0) < 0) {
                     close(slave_socket);
                     fprintf(stderr, "Error: no se pudo enviar el mensaje SYST.\n");
                     break;
                 }
                 continue;
             }
-            // Aquí se pueden manejar otros comandos FTP
-            // Por simplicidad, solo se maneja QUIT
+            if (strcmp(command, "FEAT") == 0) {
+                if (send(slave_socket, MSG_502, sizeof(MSG_502) - 1, 0) < 0) {
+                    close(slave_socket);
+                    fprintf(stderr, "Error: no se pudo enviar el mensaje FEAT.\n");
+                    break;
+                }
+                continue;
+            }
+            // Aquí se pueden manejar otros comandos FTP si es necesario.
         }
 
     }
